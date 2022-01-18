@@ -38,7 +38,7 @@ from dronekit import connect, VehicleMode
 from pymavlink import mavutil
 
 try:
-    import apriltags3 
+    import dt_apriltags 
 except ImportError:
     raise ImportError('Please download the Python wrapper for apriltag3 (apriltags3.py) and put it in the same folder as this script or add the directory path to the PYTHONPATH environment variable.')
 
@@ -47,7 +47,7 @@ except ImportError:
 #######################################
 
 # Default configurations for connection to the FCU
-connection_string_default = '/dev/ttyUSB0'
+connection_string_default = '/dev/serial/by-id/usb-ArduPilot_Pixhawk4_240023000651383439353636-if00'
 connection_baudrate_default = 921600
 vision_msg_hz_default = 20
 landing_target_msg_hz_default = 20
@@ -246,11 +246,11 @@ def fisheye_distortion(intrinsics):
 #######################################
 # Functions for AprilTag detection
 #######################################
-tag_landing_id = 0
-tag_landing_size = 0.144            # tag's border size, measured in meter
+tag_landing_id = 1
+tag_landing_size = 0.140            # tag's border size, measured in meter
 tag_image_source = "right"   # for Realsense T265, we can use "left" or "right"
 
-at_detector = apriltags3.Detector(searchpath=['apriltags'],
+at_detector = dt_apriltags.Detector(searchpath=['apriltags'],
                        families='tag36h11',
                        nthreads=1,
                        quad_decimate=1.0,
